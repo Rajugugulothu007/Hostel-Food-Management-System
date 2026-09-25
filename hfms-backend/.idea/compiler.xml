@@ -9,15 +9,13 @@
         <module name="common-security" />
         <module name="auth-service" />
         <module name="surplus-service" />
+        <module name="api-gateway" />
         <module name="voting-service" />
         <module name="user-service" />
         <module name="menu-service" />
         <module name="feedback-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="api-gateway" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
