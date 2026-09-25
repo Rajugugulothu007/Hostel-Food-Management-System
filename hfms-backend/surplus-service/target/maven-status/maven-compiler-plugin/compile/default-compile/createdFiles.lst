@@ -1,0 +1,15 @@
+com\hostel\surplus\repository\ClaimRepository.class
+com\hostel\surplus\repository\DayScholarRepository.class
+com\hostel\surplus\SurplusApplication.class
+com\hostel\surplus\entity\SurplusLog.class
+com\hostel\surplus\dto\DayScholarDTO.class
+com\hostel\surplus\entity\Claim$ClaimBuilder.class
+com\hostel\surplus\dto\SurplusLogDTO.class
+com\hostel\surplus\config\MethodSecurityConfig.class
+com\hostel\surplus\entity\DayScholar.class
+com\hostel\surplus\service\SurplusService.class
+com\hostel\surplus\entity\Claim.class
+com\hostel\surplus\controller\SurplusController.class
+com\hostel\surplus\repository\SurplusLogRepository.class
+com\hostel\surplus\entity\SurplusLog$SurplusLogBuilder.class
+com\hostel\surplus\entity\DayScholar$DayScholarBuilder.class

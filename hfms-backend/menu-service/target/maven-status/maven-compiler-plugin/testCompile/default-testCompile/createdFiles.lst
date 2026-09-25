@@ -1,0 +1,3 @@
+com\hostel\menu\MenuServiceTest.class
+com\hostel\menu\MenuControllerTest.class
+com\hostel\menu\repository\MenuItemRepositoryTest.class

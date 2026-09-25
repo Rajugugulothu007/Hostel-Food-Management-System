@@ -1,0 +1,3 @@
+com\hostel\auth\repository\UserCredentialRepositoryTest.class
+com\hostel\auth\AuthControllerTest.class
+com\hostel\auth\AuthServiceTest.class

@@ -1,0 +1,3 @@
+com\hostel\gateway\GatewayApplicationTest.class
+com\hostel\gateway\CorsConfigTest.class
+com\hostel\gateway\RouteConfigTest.class

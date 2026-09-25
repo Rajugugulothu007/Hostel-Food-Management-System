@@ -1,0 +1,3 @@
+com\hostel\surplus\SurplusServiceTest.class
+com\hostel\surplus\repository\SurplusLogRepositoryTest.class
+com\hostel\surplus\SurplusControllerTest.class

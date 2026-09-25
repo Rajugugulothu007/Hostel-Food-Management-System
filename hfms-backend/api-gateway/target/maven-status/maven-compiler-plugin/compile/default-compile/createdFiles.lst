@@ -1,0 +1,3 @@
+com\hostel\gateway\config\CorsConfig.class
+com\hostel\gateway\config\RouteConfig.class
+com\hostel\gateway\GatewayApplication.class

@@ -1,0 +1,11 @@
+com\hostel\auth\dto\LoginRequest.class
+com\hostel\auth\config\SecurityConfig.class
+com\hostel\auth\dto\LoginResponse.class
+com\hostel\auth\repository\UserCredentialRepository.class
+com\hostel\auth\service\AuthService.class
+com\hostel\auth\AuthApplication.class
+com\hostel\auth\util\JwtUtil.class
+com\hostel\auth\controller\AuthController.class
+com\hostel\auth\dto\SignupRequest.class
+com\hostel\auth\entity\UserCredential$UserCredentialBuilder.class
+com\hostel\auth\entity\UserCredential.class

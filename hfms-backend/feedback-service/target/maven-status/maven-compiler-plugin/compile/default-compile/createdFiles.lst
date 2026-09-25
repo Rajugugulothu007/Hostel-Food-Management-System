@@ -1,0 +1,8 @@
+com\hostel\feedback\service\FeedbackService.class
+com\hostel\feedback\entity\Feedback$FeedbackBuilder.class
+com\hostel\feedback\entity\Feedback.class
+com\hostel\feedback\config\MethodSecurityConfig.class
+com\hostel\feedback\dto\FeedbackDTO.class
+com\hostel\feedback\repository\FeedbackRepository.class
+com\hostel\feedback\controller\FeedbackController.class
+com\hostel\feedback\FeedbackApplication.class
