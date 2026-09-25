@@ -1,8 +1,0 @@
-com\hostel\menu\dto\MenuItemDTO.class
-com\hostel\menu\config\MethodSecurityConfig.class
-com\hostel\menu\entity\MenuItem$MenuItemBuilder.class
-com\hostel\menu\repository\MenuItemRepository.class
-com\hostel\menu\controller\MenuController.class
-com\hostel\menu\entity\MenuItem.class
-com\hostel\menu\MenuApplication.class
-com\hostel\menu\service\MenuService.class

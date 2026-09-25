@@ -1,4 +1,0 @@
-com\hostel\common\security\SecurityConfig.class
-com\hostel\common\security\Roles.class
-com\hostel\common\security\JwtAuthFilter.class
-com\hostel\common\security\JwtUtil.class
