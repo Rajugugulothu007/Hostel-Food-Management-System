@@ -16,6 +16,8 @@ import StudentsListPage from "../pages/admin/students/StudentsListPage";
 import StudentFormPage from "../pages/admin/students/StudentFormPage";
 import MenuListPage from "../pages/admin/menu/MenuListPage";
 import MenuItemFormPage from "../pages/admin/menu/MenuItemFormPage";
+import LiveVotingPage from "../pages/admin/voting/LiveVotingPage";
+import AttendancePage from "../pages/admin/attendance/AttendancePage";
 import HomePage from "../pages/student/HomePage";
 
 export default function AppRoutes() {
@@ -63,6 +65,10 @@ export default function AppRoutes() {
         <Route path="menu" element={<MenuListPage />} />
         <Route path="menu/new" element={<MenuItemFormPage />} />
         <Route path="menu/:id/edit" element={<MenuItemFormPage />} />
+
+        {/* Live Voting + Attendance */}
+        <Route path="voting" element={<LiveVotingPage />} />
+        <Route path="attendance" element={<AttendancePage />} />
       </Route>
 
       {/* Student */}
