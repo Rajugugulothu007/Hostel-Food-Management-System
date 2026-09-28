@@ -1,0 +1,20 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: analytics-service
+
+jwt:
+  secret: hfms-super-secret-key-that-is-at-least-32-characters-long
+
+# URLs of services this service calls
+services:
+  voting-url: http://localhost:8083
+  attendance-url: http://localhost:8087
+  surplus-url: http://localhost:8086
+  feedback-url: http://localhost:8085
+
+logging:
+  level:
+    com.hostel.analytics: INFO

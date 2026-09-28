@@ -1,0 +1,19 @@
+CREATE TABLE notification (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    recipient_id BIGINT NULL,
+    type VARCHAR(30) NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    body VARCHAR(300) NOT NULL,
+    channel VARCHAR(20) NOT NULL DEFAULT 'FCM',
+    status VARCHAR(20) NOT NULL,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    error_message VARCHAR(300) NULL
+);
+
+CREATE TABLE fcm_token (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    student_id BIGINT NOT NULL UNIQUE,
+    token VARCHAR(500) NOT NULL,
+    device_info VARCHAR(100) NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

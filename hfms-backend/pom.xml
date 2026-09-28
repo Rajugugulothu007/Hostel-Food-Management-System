@@ -28,6 +28,9 @@
         <module>menu-service</module>
         <module>feedback-service</module>
         <module>surplus-service</module>
+        <module>attendance-service</module>
+        <module>analytics-service</module>
+        <module>notification-service</module>
     </modules>
 
     <properties>
