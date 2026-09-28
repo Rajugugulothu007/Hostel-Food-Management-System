@@ -29,6 +29,7 @@
         <module>feedback-service</module>
         <module>surplus-service</module>
         <module>attendance-service</module>
+        <module>analytics-service</module>
     </modules>
 
     <properties>

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: analytics-service-test
+
+jwt:
+  secret: test-secret-key-at-least-32-characters-long
+
+services:
+  voting-url: http://localhost:8083
+  attendance-url: http://localhost:8087
+  surplus-url: http://localhost:8086
+  feedback-url: http://localhost:8085

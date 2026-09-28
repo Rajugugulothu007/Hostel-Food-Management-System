@@ -32,6 +32,9 @@ public class RouteConfig {
                 .route("attendance-service", r -> r
                         .path("/api/attendance/**")
                         .uri("http://localhost:8087"))
+                .route("analytics-service", r -> r
+                        .path("/api/analytics/**")
+                        .uri("http://localhost:8088"))
                 .build();
     }
 }
