@@ -29,6 +29,9 @@ public class RouteConfig {
                 .route("surplus-service", r -> r
                         .path("/api/surplus/**")
                         .uri("http://localhost:8086"))
+                .route("attendance-service", r -> r
+                        .path("/api/attendance/**")
+                        .uri("http://localhost:8087"))
                 .build();
     }
 }

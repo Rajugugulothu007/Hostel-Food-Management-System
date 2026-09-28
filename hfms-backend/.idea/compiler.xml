@@ -9,6 +9,7 @@
         <module name="common-security" />
         <module name="auth-service" />
         <module name="surplus-service" />
+        <module name="attendance-service" />
         <module name="api-gateway" />
         <module name="voting-service" />
         <module name="user-service" />
@@ -20,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
+      <module name="attendance-service" options="-parameters" />
       <module name="auth-service" options="-parameters" />
       <module name="common-security" options="-parameters" />
       <module name="feedback-service" options="-parameters" />
