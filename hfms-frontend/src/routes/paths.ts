@@ -5,8 +5,15 @@ export const ROUTES = {
   ADMIN: {
     ROOT: "/admin",
     DASHBOARD: "/admin/dashboard",
+
     STUDENTS: "/admin/students",
+    STUDENT_NEW: "/admin/students/new",
+    STUDENT_EDIT: (id: number) => `/admin/students/${id}/edit`,
+
     MENU: "/admin/menu",
+    MENU_NEW: "/admin/menu/new",
+    MENU_EDIT: (id: string) => `/admin/menu/${id}/edit`,
+
     VOTING: "/admin/voting",
     ATTENDANCE: "/admin/attendance",
   },

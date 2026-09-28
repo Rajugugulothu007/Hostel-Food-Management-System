@@ -8,10 +8,14 @@ import { ROUTES } from "./paths";
 import AdminLayout from "../components/layout/AdminLayout";
 import StudentLayout from "../components/layout/StudentLayout";
 
-import WelcomePage from "../pages/WelcomePage";           // ← NEW
+import WelcomePage from "../pages/WelcomePage";
 import LoginPage from "../pages/auth/LoginPage";
 import SignupPage from "../pages/auth/SignupPage";
 import DashboardPage from "../pages/admin/DashboardPage";
+import StudentsListPage from "../pages/admin/students/StudentsListPage";
+import StudentFormPage from "../pages/admin/students/StudentFormPage";
+import MenuListPage from "../pages/admin/menu/MenuListPage";
+import MenuItemFormPage from "../pages/admin/menu/MenuItemFormPage";
 import HomePage from "../pages/student/HomePage";
 
 export default function AppRoutes() {
@@ -19,7 +23,7 @@ export default function AppRoutes() {
 
   return (
     <Routes>
-      {/* ---------- WELCOME (root) ---------- */}
+      {/* Root */}
       <Route
         path="/"
         element={
@@ -34,25 +38,11 @@ export default function AppRoutes() {
         }
       />
 
-      {/* ---------- PUBLIC (auth) ---------- */}
-      <Route
-        path={ROUTES.LOGIN}
-        element={
-          <PublicRoute>
-            <LoginPage />
-          </PublicRoute>
-        }
-      />
-      <Route
-        path={ROUTES.SIGNUP}
-        element={
-          <PublicRoute>
-            <SignupPage />
-          </PublicRoute>
-        }
-      />
+      {/* Public */}
+      <Route path={ROUTES.LOGIN} element={<PublicRoute><LoginPage /></PublicRoute>} />
+      <Route path={ROUTES.SIGNUP} element={<PublicRoute><SignupPage /></PublicRoute>} />
 
-      {/* ---------- ADMIN ---------- */}
+      {/* Admin */}
       <Route
         path={ROUTES.ADMIN.ROOT}
         element={
@@ -63,9 +53,19 @@ export default function AppRoutes() {
       >
         <Route index element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
+
+        {/* Students */}
+        <Route path="students" element={<StudentsListPage />} />
+        <Route path="students/new" element={<StudentFormPage />} />
+        <Route path="students/:id/edit" element={<StudentFormPage />} />
+
+        {/* Menu */}
+        <Route path="menu" element={<MenuListPage />} />
+        <Route path="menu/new" element={<MenuItemFormPage />} />
+        <Route path="menu/:id/edit" element={<MenuItemFormPage />} />
       </Route>
 
-      {/* ---------- STUDENT ---------- */}
+      {/* Student */}
       <Route
         path={ROUTES.STUDENT.ROOT}
         element={
@@ -78,7 +78,6 @@ export default function AppRoutes() {
         <Route path="home" element={<HomePage />} />
       </Route>
 
-      {/* ---------- 404 fallback ---------- */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
