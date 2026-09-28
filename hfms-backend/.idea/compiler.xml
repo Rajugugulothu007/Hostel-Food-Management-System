@@ -16,6 +16,7 @@
         <module name="user-service" />
         <module name="menu-service" />
         <module name="feedback-service" />
+        <module name="notification-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -28,6 +29,7 @@
       <module name="common-security" options="-parameters" />
       <module name="feedback-service" options="-parameters" />
       <module name="menu-service" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
       <module name="surplus-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
       <module name="voting-service" options="-parameters" />
