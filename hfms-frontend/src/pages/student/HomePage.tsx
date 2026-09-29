@@ -6,6 +6,7 @@ import {
   Vote,
   ArrowRight,
   CheckCircle,
+  MessageSquare,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -208,6 +209,22 @@ export default function HomePage() {
           </p>
         </div>
       </div>
+      {/* Rate your last meal — CTA */}
+      <button
+        onClick={() => navigate("/student/feedback/new")}
+        className="w-full p-4 rounded-2xl border border-slate-200 bg-white flex items-center justify-between hover:border-teal/40 transition"
+>
+  <div className="flex items-center gap-3">
+    <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+      <MessageSquare size={18} className="text-amber-500" />
+    </div>
+    <div className="text-left">
+      <p className="font-semibold text-sm text-slate-900">Rate your last meal</p>
+      <p className="text-xs text-slate-500">Help improve the menu</p>
+    </div>
+  </div>
+  <ArrowRight size={18} className="text-slate-400" />
+</button>
     </div>
   );
 }

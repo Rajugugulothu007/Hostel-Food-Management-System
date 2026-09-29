@@ -1,5 +1,13 @@
-import { Outlet, NavLink } from "react-router-dom";
-import { Home, Vote, QrCode, TrendingUp, LogOut } from "lucide-react";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
+import {
+  Home,
+  Vote,
+  QrCode,
+  TrendingUp,
+  LogOut,
+  Bell,
+  MessageSquare,
+} from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 import { useLogout } from "../../hooks/useLogout";
 import ConfirmDialog from "../common/ConfirmDialog";
@@ -9,15 +17,18 @@ const tabs = [
   { to: "/student/vote", label: "Vote", icon: Vote },
   { to: "/student/qr", label: "QR", icon: QrCode },
   { to: "/student/impact", label: "Impact", icon: TrendingUp },
+  { to: "/student/feedback", label: "Feedback", icon: MessageSquare },
 ];
 
 export default function StudentLayout() {
+  const navigate = useNavigate();
   const { user } = useAuthStore();
   const { showConfirm, requestLogout, confirmLogout, cancelLogout } = useLogout();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-slate-100 flex justify-center">
       <div className="w-full sm:max-w-md bg-white min-h-screen flex flex-col shadow-2xl sm:my-6 sm:rounded-3xl sm:overflow-hidden sm:min-h-[calc(100vh-3rem)]">
+        {/* HEADER */}
         <header className="px-5 py-4 border-b bg-gradient-to-r from-navy to-slate-800 text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal to-cyan-500 flex items-center justify-center font-bold">
@@ -28,26 +39,39 @@ export default function StudentLayout() {
               <p className="font-semibold">{user?.username}</p>
             </div>
           </div>
-          <button
-            onClick={requestLogout}
-            className="p-2 rounded-lg hover:bg-white/10 transition"
-          >
-            <LogOut size={18} />
-          </button>
+
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => navigate("/student/notifications")}
+              className="p-2 rounded-lg hover:bg-white/10 transition relative"
+            >
+              <Bell size={18} />
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
+            </button>
+            <button
+              onClick={requestLogout}
+              className="p-2 rounded-lg hover:bg-white/10 transition"
+            >
+              <LogOut size={18} />
+            </button>
+          </div>
         </header>
 
+        {/* MAIN CONTENT */}
         <main className="flex-1 overflow-y-auto p-5 pb-24">
           <Outlet />
         </main>
 
+        {/* BOTTOM NAV */}
         <nav className="sticky bottom-0 border-t bg-white/95 backdrop-blur-sm flex">
           {tabs.map((tab) => (
             <NavLink
               key={tab.to}
               to={tab.to}
               className={({ isActive }) =>
-                `flex-1 flex flex-col items-center gap-1 py-3 text-xs font-medium transition-all
-                ${isActive ? "text-teal" : "text-slate-500 hover:text-slate-700"}`
+                `flex-1 flex flex-col items-center gap-1 py-3 text-xs font-medium transition-all ${
+                  isActive ? "text-teal" : "text-slate-500 hover:text-slate-700"
+                }`
               }
             >
               {({ isActive }) => (
@@ -57,7 +81,7 @@ export default function StudentLayout() {
                       isActive ? "bg-teal/10" : ""
                     }`}
                   >
-                    <tab.icon size={20} />
+                    <tab.icon size={18} />
                   </div>
                   <span>{tab.label}</span>
                 </>

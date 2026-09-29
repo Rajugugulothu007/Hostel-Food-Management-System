@@ -33,5 +33,9 @@ export const ROUTES = {
     VOTE_CONFIRMATION: "/student/confirmation",
     QR: "/student/qr",
     IMPACT: "/student/impact",
+    FEEDBACK: "/student/feedback",
+    FEEDBACK_NEW: "/student/feedback/new",
+    NOTIFICATIONS: "/student/notifications",
+    SURPLUS: "/student/surplus",
   },
 } as const;

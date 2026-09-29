@@ -28,6 +28,12 @@ import NgoQueuePage from "../pages/admin/surplus/NgoQueuePage";
 import HomePage from "../pages/student/HomePage";
 import VotePage from "../pages/student/VotePage";
 import VoteConfirmationPage from "../pages/student/VoteConfirmationPage";
+import MyQrPage from "../pages/student/MyQrPage";
+import ImpactPage from "../pages/student/ImpactPage";
+import MyFeedbackPage from "../pages/student/MyFeedbackPage";
+import FeedbackFormPage from "../pages/student/FeedbackFormPage";
+import NotificationsPage from "../pages/student/NotificationsPage";
+import SurplusTodayPage from "../pages/student/SurplusTodayPage";
 
 export default function AppRoutes() {
   const user = useAuthStore((s) => s.user);
@@ -94,6 +100,12 @@ export default function AppRoutes() {
         <Route path="home" element={<HomePage />} />
         <Route path="vote" element={<VotePage />} />
         <Route path="confirmation" element={<VoteConfirmationPage />} />
+        <Route path="qr" element={<MyQrPage />} />
+        <Route path="impact" element={<ImpactPage />} />
+        <Route path="feedback" element={<MyFeedbackPage />} />
+        <Route path="feedback/new" element={<FeedbackFormPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="surplus" element={<SurplusTodayPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
