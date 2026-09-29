@@ -24,7 +24,10 @@ import FeedbackTrendsPage from "../pages/admin/feedback/FeedbackTrendsPage";
 import SurplusLogPage from "../pages/admin/surplus/SurplusLogPage";
 import DayScholarsPage from "../pages/admin/surplus/DayScholarsPage";
 import NgoQueuePage from "../pages/admin/surplus/NgoQueuePage";
+
 import HomePage from "../pages/student/HomePage";
+import VotePage from "../pages/student/VotePage";
+import VoteConfirmationPage from "../pages/student/VoteConfirmationPage";
 
 export default function AppRoutes() {
   const user = useAuthStore((s) => s.user);
@@ -59,28 +62,21 @@ export default function AppRoutes() {
         <Route index element={<Navigate to={ROUTES.ADMIN.DASHBOARD} replace />} />
         <Route path="dashboard" element={<DashboardPage />} />
 
-        {/* Students */}
         <Route path="students" element={<StudentsListPage />} />
         <Route path="students/new" element={<StudentFormPage />} />
         <Route path="students/:id/edit" element={<StudentFormPage />} />
 
-        {/* Menu */}
         <Route path="menu" element={<MenuListPage />} />
         <Route path="menu/new" element={<MenuItemFormPage />} />
         <Route path="menu/:id/edit" element={<MenuItemFormPage />} />
 
-        {/* Voting + Attendance */}
         <Route path="voting" element={<LiveVotingPage />} />
         <Route path="attendance" element={<AttendancePage />} />
 
-        {/* Analytics */}
         <Route path="analytics/wastage" element={<WastageAnalyticsPage />} />
         <Route path="analytics/cost" element={<CostAnalysisPage />} />
-
-        {/* Feedback */}
         <Route path="feedback/trends" element={<FeedbackTrendsPage />} />
 
-        {/* Surplus */}
         <Route path="surplus/log" element={<SurplusLogPage />} />
         <Route path="surplus/day-scholars" element={<DayScholarsPage />} />
         <Route path="surplus/ngo" element={<NgoQueuePage />} />
@@ -96,6 +92,8 @@ export default function AppRoutes() {
       >
         <Route index element={<Navigate to={ROUTES.STUDENT.HOME} replace />} />
         <Route path="home" element={<HomePage />} />
+        <Route path="vote" element={<VotePage />} />
+        <Route path="confirmation" element={<VoteConfirmationPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -30,6 +30,7 @@ export const ROUTES = {
     ROOT: "/student",
     HOME: "/student/home",
     VOTE: "/student/vote",
+    VOTE_CONFIRMATION: "/student/confirmation",
     QR: "/student/qr",
     IMPACT: "/student/impact",
   },
