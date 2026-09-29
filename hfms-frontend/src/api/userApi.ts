@@ -2,10 +2,11 @@ import axiosClient from "./axiosClient";
 import type { StudentDTO } from "../types/student";
 
 export const userApi = {
-  async list(): Promise<StudentDTO[]> {
-    const res = await axiosClient.get<StudentDTO[]>("/api/students");
-    return res.data;
-  },
+  async list(type?: string): Promise<StudentDTO[]> {
+  const params = type ? { type } : {};
+  const res = await axiosClient.get<StudentDTO[]>("/api/students", { params });
+  return res.data;
+},
 
   async getById(id: number): Promise<StudentDTO> {
     const res = await axiosClient.get<StudentDTO>(`/api/students/${id}`);

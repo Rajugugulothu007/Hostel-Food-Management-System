@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 import { userApi } from "../../../api/userApi";
 import type { StudentDTO } from "../../../types/student";
+import { STUDENT_TYPES } from "../../../types/student";
 import PageHeader from "../../../components/common/PageHeader";
 import Button from "../../../components/common/Button";
 import Input from "../../../components/common/Input";
@@ -15,6 +16,7 @@ const empty: StudentDTO = {
   roomNo: "",
   phone: "",
   email: "",
+  type: "HOSTELLER",
   active: true,
 };
 
@@ -69,10 +71,7 @@ export default function StudentFormPage() {
         title={isEdit ? "Edit Student" : "Add Student"}
         subtitle={isEdit ? `Updating student #${id}` : "Register a new student"}
         action={
-          <Button
-            variant="secondary"
-            onClick={() => navigate("/admin/students")}
-          >
+          <Button variant="secondary" onClick={() => navigate("/admin/students")}>
             <ArrowLeft size={16} /> Back
           </Button>
         }
@@ -89,6 +88,29 @@ export default function StudentFormPage() {
           required
         />
 
+        {/* ---------- TYPE TOGGLE ---------- */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Student Type *
+          </label>
+          <div className="grid grid-cols-2 gap-3">
+            {STUDENT_TYPES.map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setForm({ ...form, type: t })}
+                className={`py-3 rounded-xl text-sm font-medium border-2 transition ${
+                  form.type === t
+                    ? "border-teal bg-teal/5 text-teal"
+                    : "border-slate-200 text-slate-600 hover:border-slate-300"
+                }`}
+              >
+                {t === "HOSTELLER" ? "🏠 Hosteller" : "🚌 Day Scholar"}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
             label="Roll Number *"
@@ -97,11 +119,15 @@ export default function StudentFormPage() {
             disabled={isEdit}
             required
           />
-          <Input
-            label="Room Number"
-            value={form.roomNo || ""}
-            onChange={(e) => setForm({ ...form, roomNo: e.target.value })}
-          />
+
+          {/* Only show Room Number for Hostellers */}
+          {form.type === "HOSTELLER" && (
+            <Input
+              label="Room Number"
+              value={form.roomNo || ""}
+              onChange={(e) => setForm({ ...form, roomNo: e.target.value })}
+            />
+          )}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

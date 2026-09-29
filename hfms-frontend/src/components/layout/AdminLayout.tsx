@@ -1,44 +1,37 @@
 import { useState, useEffect } from "react";
 import { Outlet, NavLink, useLocation } from "react-router-dom";
 import {
-  LogOut,
-  LayoutDashboard,
-  Users,
-  UtensilsCrossed,
+  Home,
+  GraduationCap,
+  ChefHat,
   Vote,
-  CheckSquare,
+  ScanLine,
+  LineChart,
+  Sparkles,
+  Recycle,
+  Heart,
+  UtensilsCrossed,
   Menu,
   ChevronLeft,
   Bell,
   Search,
-  TrendingUp,
-  MessageSquare,
-  Leaf,
-  UserCheck,
-  Heart,
 } from "lucide-react";
-import { useAuthStore } from "../../store/authStore";
-import { useLogout } from "../../hooks/useLogout";
-import ConfirmDialog from "../common/ConfirmDialog";
+import ProfileDropdown from "../common/ProfileDropdown";
 
 const navItems = [
-  { to: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/students", label: "Students", icon: Users },
-  { to: "/admin/menu", label: "Menu", icon: UtensilsCrossed },
+  { to: "/admin/dashboard", label: "Dashboard", icon: Home },
+  { to: "/admin/students", label: "Students", icon: GraduationCap },
+  { to: "/admin/menu", label: "Menu", icon: ChefHat },
   { to: "/admin/voting", label: "Live Voting", icon: Vote },
-  { to: "/admin/attendance", label: "Attendance", icon: CheckSquare },
-  { to: "/admin/analytics/wastage", label: "Wastage", icon: TrendingUp },
-  { to: "/admin/feedback/trends", label: "Feedback", icon: MessageSquare },
-  { to: "/admin/surplus/log", label: "Surplus", icon: Leaf },
-  { to: "/admin/surplus/day-scholars", label: "Day Scholars", icon: UserCheck },
+  { to: "/admin/attendance", label: "Attendance", icon: ScanLine },
+  { to: "/admin/analytics/wastage", label: "Wastage", icon: LineChart },
+  { to: "/admin/feedback/trends", label: "Feedback", icon: Sparkles },
+  { to: "/admin/surplus/log", label: "Surplus", icon: Recycle },
   { to: "/admin/surplus/ngo", label: "NGO Queue", icon: Heart },
 ];
 
 export default function AdminLayout() {
   const location = useLocation();
-  const { user } = useAuthStore();
-  const { showConfirm, requestLogout, confirmLogout, cancelLogout } = useLogout();
-
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -60,7 +53,6 @@ export default function AdminLayout() {
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
-      {/* MOBILE OVERLAY */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
@@ -68,9 +60,8 @@ export default function AdminLayout() {
         />
       )}
 
-      {/* SIDEBAR */}
       <aside
-        className={`fixed lg:static top-0 left-0 h-full z-40 ${sidebarWidth} 
+        className={`fixed lg:static top-0 left-0 h-full z-40 ${sidebarWidth}
                     bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950
                     text-white flex flex-col transition-all duration-300 ease-in-out
                     ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
@@ -118,45 +109,15 @@ export default function AdminLayout() {
                 </span>
               )}
               {collapsed && (
-                <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs whitespace-nowrap
-                                 opacity-0 group-hover:opacity-100 pointer-events-none transition">
+                <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition z-50">
                   {item.label}
                 </span>
               )}
             </NavLink>
           ))}
         </nav>
-
-        <div className="border-t border-white/10 p-3">
-          <div
-            className={`flex items-center gap-3 px-2 py-2 rounded-xl hover:bg-white/5 transition ${
-              collapsed ? "justify-center" : ""
-            }`}
-          >
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-teal to-cyan-500 flex items-center justify-center text-sm font-bold flex-shrink-0">
-              {user?.username?.[0]?.toUpperCase()}
-            </div>
-            {!collapsed && (
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{user?.username}</p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
-              </div>
-            )}
-          </div>
-
-          <button
-            onClick={requestLogout}
-            className={`mt-2 flex items-center gap-3 w-full px-3 py-2 rounded-xl text-red-400 hover:bg-red-500/10 transition ${
-              collapsed ? "justify-center" : ""
-            }`}
-          >
-            <LogOut size={18} />
-            {!collapsed && <span className="text-sm font-medium">Logout</span>}
-          </button>
-        </div>
       </aside>
 
-      {/* MAIN AREA */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="h-16 bg-white border-b flex items-center justify-between px-4 lg:px-6 flex-shrink-0">
           <div className="flex items-center gap-3">
@@ -181,6 +142,8 @@ export default function AdminLayout() {
               <Bell size={20} className="text-slate-700" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500" />
             </button>
+
+            <ProfileDropdown variant="admin" />
           </div>
         </header>
 
@@ -188,18 +151,6 @@ export default function AdminLayout() {
           <Outlet />
         </main>
       </div>
-
-      {/* LOGOUT CONFIRMATION */}
-      <ConfirmDialog
-        open={showConfirm}
-        title="Confirm Logout"
-        message="Are you sure you want to log out of HFMS?"
-        confirmText="Yes, Logout"
-        cancelText="Cancel"
-        variant="danger"
-        onConfirm={confirmLogout}
-        onCancel={cancelLogout}
-      />
     </div>
   );
 }

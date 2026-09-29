@@ -72,11 +72,6 @@ export default function LiveVotingPage() {
       <PageHeader
         title="Live Voting"
         subtitle="Real-time vote counts — updates every 5 seconds"
-        action={
-          <Button variant="secondary" onClick={loadVotes}>
-            <RefreshCw size={16} /> Refresh
-          </Button>
-        }
       />
 
       {/* Meal tabs */}

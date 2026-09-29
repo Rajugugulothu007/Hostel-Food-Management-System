@@ -58,21 +58,26 @@ export default function HomePage() {
         </p>
         <h2 className="text-xl font-bold mt-1">What's for today?</h2>
 
-        {!windowInfo.isLocked && (
-          <div className="mt-3 flex items-center gap-2 text-xs bg-white/15 px-3 py-1.5 rounded-full w-fit">
-            <Clock size={12} />
-            <span>
-              {windowInfo.isOpen ? "Voting closes at" : "Voting opens at"}{" "}
-              {(windowInfo.isOpen
-                ? windowInfo.locksAt
-                : windowInfo.opensAt
-              ).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          </div>
-        )}
+        {/* Time window badge — shows for ALL states */}
+        <div className="mt-3 flex items-center gap-2 text-xs bg-white/15 px-3 py-1.5 rounded-full w-fit">
+          <Clock size={12} />
+          <span>
+            {windowInfo.isLocked
+              ? `Closed at ${windowInfo.locksAt.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}`
+              : windowInfo.isOpen
+              ? `Voting closes at ${windowInfo.locksAt.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}`
+              : `Voting opens at ${windowInfo.opensAt.toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}`}
+          </span>
+        </div>
       </div>
 
       {/* Meal tabs */}
@@ -132,10 +137,7 @@ export default function HomePage() {
         ) : (
           <div className="divide-y divide-slate-100">
             {items.slice(0, 4).map((item) => (
-              <div
-                key={item.id}
-                className="px-5 py-3 flex items-center gap-3"
-              >
+              <div key={item.id} className="px-5 py-3 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-teal/10 flex items-center justify-center flex-shrink-0">
                   <UtensilsCrossed size={16} className="text-teal" />
                 </div>
@@ -160,7 +162,7 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* CTA */}
+      {/* Vote CTA */}
       <button
         onClick={() => navigate("/student/vote")}
         disabled={windowInfo.isLocked || windowInfo.isUpcoming}
@@ -209,22 +211,25 @@ export default function HomePage() {
           </p>
         </div>
       </div>
-      {/* Rate your last meal — CTA */}
+
+      {/* Feedback CTA */}
       <button
         onClick={() => navigate("/student/feedback/new")}
         className="w-full p-4 rounded-2xl border border-slate-200 bg-white flex items-center justify-between hover:border-teal/40 transition"
->
-  <div className="flex items-center gap-3">
-    <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
-      <MessageSquare size={18} className="text-amber-500" />
-    </div>
-    <div className="text-left">
-      <p className="font-semibold text-sm text-slate-900">Rate your last meal</p>
-      <p className="text-xs text-slate-500">Help improve the menu</p>
-    </div>
-  </div>
-  <ArrowRight size={18} className="text-slate-400" />
-</button>
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+            <MessageSquare size={18} className="text-amber-500" />
+          </div>
+          <div className="text-left">
+            <p className="font-semibold text-sm text-slate-900">
+              Rate your last meal
+            </p>
+            <p className="text-xs text-slate-500">Help improve the menu</p>
+          </div>
+        </div>
+        <ArrowRight size={18} className="text-slate-400" />
+      </button>
     </div>
   );
 }

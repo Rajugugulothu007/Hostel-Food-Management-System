@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Users, Pencil, Trash2, Search } from "lucide-react";
+import { Plus, Users, Pencil, Trash2, Search, Home, Bus } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { userApi } from "../../../api/userApi";
-import type { StudentDTO } from "../../../types/student";
+import type { StudentDTO, StudentType } from "../../../types/student";
+import { STUDENT_TYPES } from "../../../types/student";
 import PageHeader from "../../../components/common/PageHeader";
 import Button from "../../../components/common/Button";
-import Table from "../../../components/common/Table";
-import type { Column } from "../../../components/common/Table";
+import Table, { type Column } from "../../../components/common/Table";
 import Badge from "../../../components/common/Badge";
 import EmptyState from "../../../components/common/EmptyState";
 
 export default function StudentsListPage() {
+  const [tab, setTab] = useState<StudentType>("HOSTELLER");
   const [students, setStudents] = useState<StudentDTO[]>([]);
+  const [counts, setCounts] = useState<Record<StudentType, number>>({
+    HOSTELLER: 0,
+    DAY_SCHOLAR: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -21,9 +26,18 @@ export default function StudentsListPage() {
   const load = async () => {
     setLoading(true);
     try {
-      const data = await userApi.list();
-      setStudents(data);
-    } catch (err: any) {
+      const [hostellers, dayScholars] = await Promise.all([
+        userApi.list("HOSTELLER"),
+        userApi.list("DAY_SCHOLAR"),
+      ]);
+
+      setCounts({
+        HOSTELLER: hostellers.length,
+        DAY_SCHOLAR: dayScholars.length,
+      });
+
+      setStudents(tab === "HOSTELLER" ? hostellers : dayScholars);
+    } catch {
       toast.error("Failed to load students");
     } finally {
       setLoading(false);
@@ -32,7 +46,8 @@ export default function StudentsListPage() {
 
   useEffect(() => {
     load();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab]);
 
   const handleDelete = async (id: number, name: string) => {
     if (!confirm(`Delete student "${name}"?`)) return;
@@ -54,7 +69,10 @@ export default function StudentsListPage() {
   const columns: Column<StudentDTO>[] = [
     { header: "Name", accessor: "name" },
     { header: "Roll No", accessor: "rollNo" },
-    { header: "Room", accessor: (s) => s.roomNo || "—" },
+    {
+      header: "Room",
+      accessor: (s) => (s.type === "DAY_SCHOLAR" ? "—" : s.roomNo || "—"),
+    },
     { header: "Phone", accessor: (s) => s.phone || "—" },
     {
       header: "Status",
@@ -91,17 +109,80 @@ export default function StudentsListPage() {
     },
   ];
 
+  const tabMeta: Record<
+    StudentType,
+    { label: string; icon: any; desc: string }
+  > = {
+    HOSTELLER: {
+      label: "Hostellers",
+      icon: Home,
+      desc: "Students living in the hostel",
+    },
+    DAY_SCHOLAR: {
+      label: "Day Scholars",
+      icon: Bus,
+      desc: "Students who come from home",
+    },
+  };
+
   return (
     <div>
       <PageHeader
         title="Students"
-        subtitle={`${students.length} total students`}
+        subtitle={`${counts.HOSTELLER} hostellers · ${counts.DAY_SCHOLAR} day scholars`}
         action={
           <Button onClick={() => navigate("/admin/students/new")}>
             <Plus size={16} /> Add Student
           </Button>
         }
       />
+
+      {/* Tabs */}
+      <div className="grid grid-cols-2 gap-3 mb-5">
+        {STUDENT_TYPES.map((t) => {
+          const Icon = tabMeta[t].icon;
+          const isActive = tab === t;
+
+          return (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className={`p-4 rounded-2xl border-2 text-left transition ${
+                isActive
+                  ? "border-teal bg-teal/5 shadow-md shadow-teal/10"
+                  : "border-slate-200 bg-white hover:border-slate-300"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <div
+                  className={`w-9 h-9 rounded-lg flex items-center justify-center ${
+                    isActive
+                      ? "bg-teal text-white"
+                      : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  <Icon size={18} />
+                </div>
+                <span
+                  className={`text-2xl font-bold ${
+                    isActive ? "text-teal" : "text-slate-400"
+                  }`}
+                >
+                  {counts[t]}
+                </span>
+              </div>
+              <p
+                className={`text-sm font-semibold ${
+                  isActive ? "text-teal" : "text-slate-700"
+                }`}
+              >
+                {tabMeta[t].label}
+              </p>
+              <p className="text-xs text-slate-500 mt-0.5">{tabMeta[t].desc}</p>
+            </button>
+          );
+        })}
+      </div>
 
       {/* Search */}
       <div className="flex items-center gap-2 px-3 py-2 mb-4 rounded-xl bg-white border border-slate-200 w-full sm:w-80">
@@ -120,11 +201,13 @@ export default function StudentsListPage() {
         <div className="bg-white rounded-2xl border border-slate-100">
           <EmptyState
             icon={Users}
-            title={search ? "No results" : "No students yet"}
+            title={
+              search ? "No results" : `No ${tabMeta[tab].label.toLowerCase()} yet`
+            }
             description={
               search
                 ? "Try a different search term"
-                : "Add your first student to get started"
+                : "Add the first student to get started"
             }
             action={
               !search && (
