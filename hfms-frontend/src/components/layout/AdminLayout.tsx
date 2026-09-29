@@ -11,6 +11,11 @@ import {
   ChevronLeft,
   Bell,
   Search,
+  TrendingUp,
+  MessageSquare,
+  Leaf,
+  UserCheck,
+  Heart,
 } from "lucide-react";
 import { useAuthStore } from "../../store/authStore";
 import { useLogout } from "../../hooks/useLogout";
@@ -22,6 +27,11 @@ const navItems = [
   { to: "/admin/menu", label: "Menu", icon: UtensilsCrossed },
   { to: "/admin/voting", label: "Live Voting", icon: Vote },
   { to: "/admin/attendance", label: "Attendance", icon: CheckSquare },
+  { to: "/admin/analytics/wastage", label: "Wastage", icon: TrendingUp },
+  { to: "/admin/feedback/trends", label: "Feedback", icon: MessageSquare },
+  { to: "/admin/surplus/log", label: "Surplus", icon: Leaf },
+  { to: "/admin/surplus/day-scholars", label: "Day Scholars", icon: UserCheck },
+  { to: "/admin/surplus/ngo", label: "NGO Queue", icon: Heart },
 ];
 
 export default function AdminLayout() {

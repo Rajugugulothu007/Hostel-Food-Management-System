@@ -16,6 +16,14 @@ export const ROUTES = {
 
     VOTING: "/admin/voting",
     ATTENDANCE: "/admin/attendance",
+
+    ANALYTICS_WASTAGE: "/admin/analytics/wastage",
+    ANALYTICS_COST: "/admin/analytics/cost",
+    FEEDBACK_TRENDS: "/admin/feedback/trends",
+
+    SURPLUS_LOG: "/admin/surplus/log",
+    SURPLUS_DAY_SCHOLARS: "/admin/surplus/day-scholars",
+    SURPLUS_NGO: "/admin/surplus/ngo",
   },
 
   STUDENT: {

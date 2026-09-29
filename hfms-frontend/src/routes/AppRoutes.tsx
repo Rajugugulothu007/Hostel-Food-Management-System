@@ -18,6 +18,12 @@ import MenuListPage from "../pages/admin/menu/MenuListPage";
 import MenuItemFormPage from "../pages/admin/menu/MenuItemFormPage";
 import LiveVotingPage from "../pages/admin/voting/LiveVotingPage";
 import AttendancePage from "../pages/admin/attendance/AttendancePage";
+import WastageAnalyticsPage from "../pages/admin/analytics/WastageAnalyticsPage";
+import CostAnalysisPage from "../pages/admin/analytics/CostAnalysisPage";
+import FeedbackTrendsPage from "../pages/admin/feedback/FeedbackTrendsPage";
+import SurplusLogPage from "../pages/admin/surplus/SurplusLogPage";
+import DayScholarsPage from "../pages/admin/surplus/DayScholarsPage";
+import NgoQueuePage from "../pages/admin/surplus/NgoQueuePage";
 import HomePage from "../pages/student/HomePage";
 
 export default function AppRoutes() {
@@ -25,7 +31,6 @@ export default function AppRoutes() {
 
   return (
     <Routes>
-      {/* Root */}
       <Route
         path="/"
         element={
@@ -40,11 +45,9 @@ export default function AppRoutes() {
         }
       />
 
-      {/* Public */}
       <Route path={ROUTES.LOGIN} element={<PublicRoute><LoginPage /></PublicRoute>} />
       <Route path={ROUTES.SIGNUP} element={<PublicRoute><SignupPage /></PublicRoute>} />
 
-      {/* Admin */}
       <Route
         path={ROUTES.ADMIN.ROOT}
         element={
@@ -66,12 +69,23 @@ export default function AppRoutes() {
         <Route path="menu/new" element={<MenuItemFormPage />} />
         <Route path="menu/:id/edit" element={<MenuItemFormPage />} />
 
-        {/* Live Voting + Attendance */}
+        {/* Voting + Attendance */}
         <Route path="voting" element={<LiveVotingPage />} />
         <Route path="attendance" element={<AttendancePage />} />
+
+        {/* Analytics */}
+        <Route path="analytics/wastage" element={<WastageAnalyticsPage />} />
+        <Route path="analytics/cost" element={<CostAnalysisPage />} />
+
+        {/* Feedback */}
+        <Route path="feedback/trends" element={<FeedbackTrendsPage />} />
+
+        {/* Surplus */}
+        <Route path="surplus/log" element={<SurplusLogPage />} />
+        <Route path="surplus/day-scholars" element={<DayScholarsPage />} />
+        <Route path="surplus/ngo" element={<NgoQueuePage />} />
       </Route>
 
-      {/* Student */}
       <Route
         path={ROUTES.STUDENT.ROOT}
         element={
