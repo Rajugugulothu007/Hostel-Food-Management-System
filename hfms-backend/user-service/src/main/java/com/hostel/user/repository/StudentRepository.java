@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
+
     List<Student> findByActiveTrue();
+
+    List<Student> findByType(String type);   // ← NEW
+
     boolean existsByRollNo(String rollNo);
 }

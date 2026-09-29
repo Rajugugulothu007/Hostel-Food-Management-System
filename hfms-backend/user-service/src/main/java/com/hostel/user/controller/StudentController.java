@@ -25,10 +25,14 @@ public class StudentController {
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','STUDENT')")
-    public ResponseEntity<List<StudentDTO>> listAll() {
+    public ResponseEntity<List<StudentDTO>> listAll(
+            @RequestParam(required = false) String type) {
+
+        if (type != null && !type.isBlank()) {
+            return ResponseEntity.ok(service.listByType(type));
+        }
         return ResponseEntity.ok(service.listAll());
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));

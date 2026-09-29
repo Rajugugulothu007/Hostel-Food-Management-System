@@ -51,4 +51,7 @@ public class StudentService {
         s.setActive(false);
         repo.save(s);
     }
+    public List<StudentDTO> listByType(String type) {
+        return repo.findByType(type).stream().map(mapper::toDTO).toList();
+    }
 }

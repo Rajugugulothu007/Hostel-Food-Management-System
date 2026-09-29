@@ -28,6 +28,11 @@ public class Student {
     @Column(name = "hostel_id")
     private Long hostelId;
 
+    // ---------- NEW ----------
+    @Column(nullable = false, length = 20)
+    private String type = "HOSTELLER";  // HOSTELLER | DAY_SCHOLAR
+    // -------------------------
+
     @Column(nullable = false)
     private Boolean active = true;
 }
