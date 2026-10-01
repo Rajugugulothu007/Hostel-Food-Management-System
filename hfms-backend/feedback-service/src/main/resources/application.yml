@@ -25,3 +25,8 @@ spring:
 
 jwt:
   secret: hfms-super-secret-key-that-is-at-least-32-characters-long
+
+
+services:
+  voting-url: http://localhost:8083
+  attendance-url: http://localhost:8087

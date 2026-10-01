@@ -26,3 +26,7 @@ spring:
 jwt:
   secret: hfms-super-secret-key-that-is-at-least-32-characters-long
   expiration: 86400000
+
+
+services:
+  user-url: http://localhost:8082

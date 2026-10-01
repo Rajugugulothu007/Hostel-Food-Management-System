@@ -78,4 +78,11 @@ public class CheckInService {
         dto.setCounterId(c.getCounterId());
         return dto;
     }
+    public List<CheckInDTO> myToday(Long studentId) {
+        return repo.findByStudentId(studentId)
+                .stream()
+                .filter(c -> c.getCheckInDate().equals(java.time.LocalDate.now()))
+                .map(this::toDTO)
+                .toList();
+    }
 }

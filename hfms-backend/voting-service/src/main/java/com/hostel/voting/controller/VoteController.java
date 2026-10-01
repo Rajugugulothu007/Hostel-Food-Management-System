@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/votes")
 @RequiredArgsConstructor
@@ -27,5 +29,11 @@ public class VoteController {
     @GetMapping("/count/{mealId}")
     public ResponseEntity<LiveCountDTO> liveCount(@PathVariable String mealId) {
         return ResponseEntity.ok(new LiveCountDTO(mealId, service.liveCount(mealId)));
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<VoteResponse>> myVotes(Authentication auth) {
+        Long studentId = (long) auth.getName().hashCode();
+        return ResponseEntity.ok(service.myVotes(studentId));
     }
 }

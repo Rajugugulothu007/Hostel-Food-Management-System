@@ -33,9 +33,15 @@ public class StudentController {
         }
         return ResponseEntity.ok(service.listAll());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
+    }
+
+    @GetMapping("/by-username/{username}")
+    public ResponseEntity<StudentDTO> getByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(service.getByUsername(username));
     }
 
     @PutMapping("/{id}")

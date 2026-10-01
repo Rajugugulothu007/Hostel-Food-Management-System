@@ -18,8 +18,6 @@ public class StudentDTO {
     private String phone;
     private String email;
     private Long hostelId;
-
-    private String type;   // HOSTELLER | DAY_SCHOLAR
-
+    private String type;
     private Boolean active;
 }

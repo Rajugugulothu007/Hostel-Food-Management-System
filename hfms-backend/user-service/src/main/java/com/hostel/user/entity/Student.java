@@ -28,11 +28,11 @@ public class Student {
     @Column(name = "hostel_id")
     private Long hostelId;
 
-    // ---------- NEW ----------
+    @Builder.Default
     @Column(nullable = false, length = 20)
-    private String type = "HOSTELLER";  // HOSTELLER | DAY_SCHOLAR
-    // -------------------------
+    private String type = "HOSTELLER";
 
+    @Builder.Default
     @Column(nullable = false)
     private Boolean active = true;
 }

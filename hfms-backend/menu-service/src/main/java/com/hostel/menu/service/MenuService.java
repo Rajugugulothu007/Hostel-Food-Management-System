@@ -30,6 +30,7 @@ public class MenuService {
                 .quantity(dto.getQuantity())
                 .dietaryTags(dto.getDietaryTags())
                 .allergens(dto.getAllergens())
+                .imageUrl(dto.getImageUrl())
                 .active(dto.getActive() == null ? true : dto.getActive())
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -60,6 +61,7 @@ public class MenuService {
         if (dto.getQuantity() != null) item.setQuantity(dto.getQuantity());
         if (dto.getDietaryTags() != null) item.setDietaryTags(dto.getDietaryTags());
         if (dto.getAllergens() != null) item.setAllergens(dto.getAllergens());
+        if (dto.getImageUrl() != null) item.setImageUrl(dto.getImageUrl());
         if (dto.getActive() != null) item.setActive(dto.getActive());
         item.setUpdatedAt(LocalDateTime.now());
 
@@ -82,6 +84,7 @@ public class MenuService {
         dto.setQuantity(item.getQuantity());
         dto.setDietaryTags(item.getDietaryTags());
         dto.setAllergens(item.getAllergens());
+        dto.setImageUrl(item.getImageUrl());
         dto.setActive(item.getActive());
         return dto;
     }

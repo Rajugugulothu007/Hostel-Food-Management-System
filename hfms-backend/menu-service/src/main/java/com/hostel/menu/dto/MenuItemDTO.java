@@ -17,5 +17,6 @@ public class MenuItemDTO {
     private String quantity;
     private String dietaryTags;
     private String allergens;
+    private String imageUrl;
     private Boolean active;
 }
