@@ -6,7 +6,6 @@ import {
   ChefHat,
   Vote,
   ScanLine,
-  LineChart,
   Sparkles,
   Recycle,
   Heart,
@@ -15,6 +14,7 @@ import {
   ChevronLeft,
   Bell,
   Search,
+  X,
 } from "lucide-react";
 import ProfileDropdown from "../common/ProfileDropdown";
 
@@ -24,7 +24,6 @@ const navItems = [
   { to: "/admin/menu", label: "Menu", icon: ChefHat },
   { to: "/admin/voting", label: "Live Voting", icon: Vote },
   { to: "/admin/attendance", label: "Attendance", icon: ScanLine },
-  { to: "/admin/analytics/wastage", label: "Wastage", icon: LineChart },
   { to: "/admin/feedback/trends", label: "Feedback", icon: Sparkles },
   { to: "/admin/surplus/log", label: "Surplus", icon: Recycle },
   { to: "/admin/surplus/ngo", label: "NGO Queue", icon: Heart },
@@ -35,10 +34,12 @@ export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Close mobile drawer on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  // Auto-collapse sidebar on small screens (desktop-only behavior)
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 1024) setCollapsed(true);
@@ -49,10 +50,13 @@ export default function AdminLayout() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sidebarWidth = collapsed ? "w-[76px]" : "w-64";
+  // On mobile drawer → always show full labels (ignore collapsed)
+  const isExpanded = mobileOpen || !collapsed;
+  const sidebarWidth = isExpanded ? "w-64" : "w-[76px]";
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
+      {/* MOBILE OVERLAY */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-30 lg:hidden"
@@ -60,24 +64,38 @@ export default function AdminLayout() {
         />
       )}
 
+      {/* SIDEBAR */}
       <aside
         className={`fixed lg:static top-0 left-0 h-full z-40 ${sidebarWidth}
                     bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950
                     text-white flex flex-col transition-all duration-300 ease-in-out
                     ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}
       >
+        {/* Logo + close/collapse button */}
         <div className="flex items-center justify-between px-4 h-16 border-b border-white/10">
           <div className="flex items-center gap-2 overflow-hidden">
             <div className="w-9 h-9 rounded-lg bg-teal flex items-center justify-center flex-shrink-0">
               <UtensilsCrossed size={20} />
             </div>
-            {!collapsed && (
+            {isExpanded && (
               <span className="text-lg font-bold whitespace-nowrap">HFMS</span>
             )}
           </div>
+
+          {/* Close button (mobile) */}
+          <button
+            onClick={() => setMobileOpen(false)}
+            className="lg:hidden text-gray-400 hover:text-white transition"
+            aria-label="Close menu"
+          >
+            <X size={20} />
+          </button>
+
+          {/* Collapse button (desktop) */}
           <button
             onClick={() => setCollapsed(!collapsed)}
             className="hidden lg:flex text-gray-400 hover:text-white transition"
+            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             <ChevronLeft
               size={18}
@@ -88,6 +106,7 @@ export default function AdminLayout() {
           </button>
         </div>
 
+        {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => (
             <NavLink
@@ -103,12 +122,12 @@ export default function AdminLayout() {
               }
             >
               <item.icon size={20} className="flex-shrink-0" />
-              {!collapsed && (
+              {isExpanded && (
                 <span className="text-sm font-medium whitespace-nowrap">
                   {item.label}
                 </span>
               )}
-              {collapsed && (
+              {!isExpanded && (
                 <span className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-slate-800 text-white text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 pointer-events-none transition z-50">
                   {item.label}
                 </span>
@@ -118,12 +137,15 @@ export default function AdminLayout() {
         </nav>
       </aside>
 
+      {/* MAIN AREA */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        {/* HEADER */}
         <header className="h-16 bg-white border-b flex items-center justify-between px-4 lg:px-6 flex-shrink-0">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileOpen(true)}
               className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition"
+              aria-label="Open menu"
             >
               <Menu size={22} className="text-slate-700" />
             </button>
@@ -137,12 +159,12 @@ export default function AdminLayout() {
             </div>
           </div>
 
+          {/* RIGHT SIDE — Bell + Profile */}
           <div className="flex items-center gap-2">
             <button className="relative p-2 rounded-lg hover:bg-slate-100 transition">
               <Bell size={20} className="text-slate-700" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500" />
             </button>
-
             <ProfileDropdown variant="admin" />
           </div>
         </header>

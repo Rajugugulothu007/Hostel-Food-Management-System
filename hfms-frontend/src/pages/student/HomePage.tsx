@@ -7,6 +7,8 @@ import {
   ArrowRight,
   CheckCircle,
   MessageSquare,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -15,6 +17,7 @@ import type { MenuItemDTO } from "../../types/menu";
 import { MEAL_TYPES, type MealType } from "../../types/vote";
 import { useVoteWindows } from "../../hooks/useVoteWindows";
 import { useAuthStore } from "../../store/authStore";
+import { getFoodImage } from "../../utils/foodEmoji";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -24,6 +27,7 @@ export default function HomePage() {
   const [selectedMeal, setSelectedMeal] = useState<MealType>("BREAKFAST");
   const [items, setItems] = useState<MenuItemDTO[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showAllItems, setShowAllItems] = useState(false);
 
   const windowInfo = windows[selectedMeal];
 
@@ -38,6 +42,10 @@ export default function HomePage() {
         setLoading(false);
       }
     })();
+  }, [selectedMeal]);
+
+  useEffect(() => {
+    setShowAllItems(false);
   }, [selectedMeal]);
 
   const hour = new Date().getHours();
@@ -58,7 +66,6 @@ export default function HomePage() {
         </p>
         <h2 className="text-xl font-bold mt-1">What's for today?</h2>
 
-        {/* Time window badge — shows for ALL states */}
         <div className="mt-3 flex items-center gap-2 text-xs bg-white/15 px-3 py-1.5 rounded-full w-fit">
           <Clock size={12} />
           <span>
@@ -124,9 +131,12 @@ export default function HomePage() {
         {loading ? (
           <div className="p-5 space-y-3">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="animate-pulse space-y-2">
-                <div className="h-4 bg-slate-100 rounded w-1/2" />
-                <div className="h-3 bg-slate-100 rounded w-1/3" />
+              <div key={i} className="animate-pulse flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl bg-slate-100" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-slate-100 rounded w-1/2" />
+                  <div className="h-3 bg-slate-100 rounded w-1/3" />
+                </div>
               </div>
             ))}
           </div>
@@ -135,30 +145,68 @@ export default function HomePage() {
             No items for this meal yet.
           </div>
         ) : (
-          <div className="divide-y divide-slate-100">
-            {items.slice(0, 4).map((item) => (
-              <div key={item.id} className="px-5 py-3 flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-teal/10 flex items-center justify-center flex-shrink-0">
-                  <UtensilsCrossed size={16} className="text-teal" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-slate-900 truncate">
-                    {item.itemName}
-                  </p>
-                  {item.quantity && (
-                    <p className="text-xs text-slate-500 truncate">
-                      {item.quantity}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
+          <>
+            <div className="divide-y divide-slate-100">
+              {(showAllItems ? items : items.slice(0, 4)).map((item) => {
+                const img = item.imageUrl || getFoodImage(item.id);
+                return (
+                  <div
+                    key={item.id}
+                    className="px-5 py-3 flex items-center gap-3"
+                  >
+                    {/* Thumbnail */}
+                    <div className="w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0">
+                      {img ? (
+                        <img
+                          src={img}
+                          alt={item.itemName}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).style.display =
+                              "none";
+                          }}
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-2xl">
+                          🍽
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Text */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-900 truncate">
+                        {item.itemName}
+                      </p>
+                      {item.quantity && (
+                        <p className="text-xs text-slate-500 truncate">
+                          {item.quantity}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Expand / collapse */}
             {items.length > 4 && (
-              <p className="px-5 py-3 text-xs text-slate-500 text-center">
-                + {items.length - 4} more
-              </p>
+              <button
+                onClick={() => setShowAllItems(!showAllItems)}
+                className="w-full py-3 text-xs font-medium text-teal hover:bg-teal/5 transition flex items-center justify-center gap-1 border-t border-slate-100"
+              >
+                {showAllItems ? (
+                  <>
+                    <ChevronUp size={14} /> Show less
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown size={14} /> + {items.length - 4} more
+                  </>
+                )}
+              </button>
             )}
-          </div>
+          </>
         )}
       </div>
 

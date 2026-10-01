@@ -17,6 +17,11 @@ export const feedbackApi = {
     return res.data;
   },
 
+  async getEligible(): Promise<{ mealId: string }[]> {
+    const res = await axiosClient.get<{ mealId: string }[]>("/api/feedback/eligible");
+    return res.data;
+  },
+
   async lowRated(): Promise<LowRatedItem[]> {
     const res = await axiosClient.get<LowRatedItem[]>("/api/feedback/low-rated");
     return res.data;

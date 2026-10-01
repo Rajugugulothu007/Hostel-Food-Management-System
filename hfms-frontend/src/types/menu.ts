@@ -1,10 +1,11 @@
 export interface MenuItemDTO {
-  id?: string;              // e.g., "MEAL001"
+  id?: string;
   itemName: string;
-  mealType: string;         // BREAKFAST, LUNCH, DINNER
+  mealType: string;
   quantity?: string;
-  dietaryTags?: string;     // "veg,gluten-free"
-  allergens?: string;       // "dairy,nuts"
+  dietaryTags?: string;
+  allergens?: string;
+  imageUrl?: string;    // ← NEW
   active?: boolean;
 }
 

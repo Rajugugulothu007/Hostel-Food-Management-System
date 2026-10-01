@@ -126,6 +126,7 @@ export default function VotePage() {
               name={item.itemName}
               quantity={item.quantity}
               dietaryTags={item.dietaryTags}
+              imageUrl={item.imageUrl}
               isSelected={selectedId === item.id}
               disabled={!canVote}
               onSelect={() => {
