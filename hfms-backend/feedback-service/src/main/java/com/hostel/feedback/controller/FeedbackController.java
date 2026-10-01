@@ -1,6 +1,7 @@
 package com.hostel.feedback.controller;
 
 import com.hostel.feedback.dto.FeedbackDTO;
+import com.hostel.feedback.service.EligibilityService;
 import com.hostel.feedback.service.FeedbackService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,21 @@ import java.util.Map;
 public class FeedbackController {
 
     private final FeedbackService service;
+    private final EligibilityService eligibilityService;
 
     @PostMapping
     public ResponseEntity<FeedbackDTO> submit(@Valid @RequestBody FeedbackDTO dto,
                                               Authentication auth) {
         Long studentId = (long) auth.getName().hashCode();
         return ResponseEntity.ok(service.submit(studentId, dto));
+    }
+
+    @GetMapping("/eligible")
+    public ResponseEntity<List<Map<String, String>>> eligible(
+            Authentication auth,
+            @RequestHeader("Authorization") String authHeader) {
+        Long studentId = (long) auth.getName().hashCode();
+        return ResponseEntity.ok(eligibilityService.eligibleItems(studentId, authHeader));
     }
 
     @GetMapping("/item/{mealId}")

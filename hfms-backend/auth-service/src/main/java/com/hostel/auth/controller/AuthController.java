@@ -24,4 +24,9 @@ public class AuthController {
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest req) {
         return ResponseEntity.ok(authService.login(req));
     }
+
+    @GetMapping("/by-username/{username}")
+    public ResponseEntity<StudentDTO> getByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(service.getByUsername(username));
+    }
 }

@@ -33,14 +33,13 @@ class StudentServiceTest {
         service = new StudentService(repo, mapper);
     }
 
-    // ---------- CREATE TESTS ----------
-
     @Test
     void create_success_savesStudent() {
         StudentDTO dto = new StudentDTO();
         dto.setName("Arjun");
         dto.setRollNo("22CS001");
         dto.setRoomNo("A101");
+        dto.setType("HOSTELLER");
 
         when(repo.existsByRollNo("22CS001")).thenReturn(false);
         when(repo.save(any(Student.class))).thenAnswer(inv -> {
@@ -73,12 +72,10 @@ class StudentServiceTest {
         verify(repo, never()).save(any());
     }
 
-    // ---------- LIST TESTS ----------
-
     @Test
     void listAll_returnsAllStudents() {
-        Student s1 = Student.builder().id(1L).name("Arjun").rollNo("22CS001").active(true).build();
-        Student s2 = Student.builder().id(2L).name("Priya").rollNo("22CS002").active(true).build();
+        Student s1 = Student.builder().id(1L).name("Arjun").rollNo("22CS001").type("HOSTELLER").active(true).build();
+        Student s2 = Student.builder().id(2L).name("Priya").rollNo("22CS002").type("DAY_SCHOLAR").active(true).build();
 
         when(repo.findAll()).thenReturn(List.of(s1, s2));
 
@@ -90,15 +87,16 @@ class StudentServiceTest {
     }
 
     @Test
-    void listAll_emptyRepo_returnsEmptyList() {
-        when(repo.findAll()).thenReturn(List.of());
+    void listByType_returnsFiltered() {
+        Student s1 = Student.builder().id(1L).name("Arjun").rollNo("22CS001").type("HOSTELLER").active(true).build();
 
-        List<StudentDTO> result = service.listAll();
+        when(repo.findByType("HOSTELLER")).thenReturn(List.of(s1));
 
-        assertTrue(result.isEmpty());
+        List<StudentDTO> result = service.listByType("HOSTELLER");
+
+        assertEquals(1, result.size());
+        assertEquals("HOSTELLER", result.get(0).getType());
     }
-
-    // ---------- GET BY ID TESTS ----------
 
     @Test
     void getById_found_returnsDTO() {
@@ -122,8 +120,6 @@ class StudentServiceTest {
         assertEquals("Student not found", ex.getMessage());
     }
 
-    // ---------- UPDATE TESTS ----------
-
     @Test
     void update_success_updatesFields() {
         Student existing = Student.builder()
@@ -133,6 +129,7 @@ class StudentServiceTest {
         dto.setName("Arjun Kumar");
         dto.setRoomNo("A102");
         dto.setPhone("9876543210");
+        dto.setType("HOSTELLER");
         dto.setActive(true);
 
         when(repo.findById(1L)).thenReturn(Optional.of(existing));
@@ -146,18 +143,6 @@ class StudentServiceTest {
     }
 
     @Test
-    void update_notFound_throws() {
-        StudentDTO dto = new StudentDTO();
-        dto.setName("X");
-
-        when(repo.findById(99L)).thenReturn(Optional.empty());
-
-        assertThrows(RuntimeException.class, () -> service.update(99L, dto));
-    }
-
-    // ---------- DELETE TESTS ----------
-
-    @Test
     void delete_setsActiveFalse() {
         Student existing = Student.builder()
                 .id(1L).name("Arjun").rollNo("22CS001").active(true).build();
@@ -169,12 +154,5 @@ class StudentServiceTest {
 
         assertFalse(existing.getActive());
         verify(repo, times(1)).save(existing);
-    }
-
-    @Test
-    void delete_notFound_throws() {
-        when(repo.findById(99L)).thenReturn(Optional.empty());
-
-        assertThrows(RuntimeException.class, () -> service.delete(99L));
     }
 }

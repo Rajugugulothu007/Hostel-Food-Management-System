@@ -28,10 +28,20 @@ public class StudentService {
         return repo.findAll().stream().map(mapper::toDTO).toList();
     }
 
+    public List<StudentDTO> listByType(String type) {
+        return repo.findByType(type).stream().map(mapper::toDTO).toList();
+    }
+
     public StudentDTO getById(Long id) {
         Student s = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         return mapper.toDTO(s);
+    }
+
+    public StudentDTO getByUsername(String username) {
+        return repo.findByRollNo(username)
+                .map(mapper::toDTO)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
     public StudentDTO update(Long id, StudentDTO dto) {
@@ -41,6 +51,7 @@ public class StudentService {
         s.setRoomNo(dto.getRoomNo());
         s.setPhone(dto.getPhone());
         s.setEmail(dto.getEmail());
+        s.setType(dto.getType());
         s.setActive(dto.getActive());
         return mapper.toDTO(repo.save(s));
     }

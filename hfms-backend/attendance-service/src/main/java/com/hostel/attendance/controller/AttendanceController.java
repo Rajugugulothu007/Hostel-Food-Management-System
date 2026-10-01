@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Map;
@@ -78,5 +79,11 @@ public class AttendanceController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<AttendanceSummaryDTO>> summary() {
         return ResponseEntity.ok(service.todaySummary());
+    }
+
+    @GetMapping("/my/today")
+    public ResponseEntity<List<CheckInDTO>> myToday(Authentication auth) {
+        Long studentId = (long) auth.getName().hashCode();
+        return ResponseEntity.ok(service.myToday(studentId));
     }
 }

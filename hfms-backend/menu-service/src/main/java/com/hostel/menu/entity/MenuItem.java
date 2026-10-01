@@ -12,22 +12,25 @@ public class MenuItem {
 
     @Id
     @Column(name = "id", length = 20)
-    private String id;   // e.g., "MEAL001"
+    private String id;
 
     @Column(name = "item_name", nullable = false)
-    private String itemName;   // "Idli + Sambar + Coconut Chutney"
+    private String itemName;
 
     @Column(name = "meal_type", nullable = false, length = 20)
-    private String mealType;   // BREAKFAST, LUNCH, DINNER
+    private String mealType;
 
     @Column(name = "quantity", length = 100)
-    private String quantity;   // "4 pcs + 150ml + 50ml"
+    private String quantity;
 
     @Column(name = "dietary_tags", length = 100)
-    private String dietaryTags;   // "veg,gluten-free"
+    private String dietaryTags;
 
     @Column(name = "allergens", length = 100)
-    private String allergens;   // "dairy,nuts"
+    private String allergens;
+
+    @Column(name = "image_url", length = 500)
+    private String imageUrl;
 
     @Column(nullable = false)
     private Boolean active = true;

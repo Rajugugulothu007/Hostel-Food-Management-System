@@ -33,3 +33,11 @@ secrets/
 target/
 *.jar
 *.class
+
+# Node / Vite
+node_modules/
+dist/
+build/
+
+node_modules/
+dist/

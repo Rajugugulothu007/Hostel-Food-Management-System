@@ -9,10 +9,11 @@ import java.util.Optional;
 
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-    Optional<Vote> findByStudentIdAndMealIdAndVoteDate(
-            Long studentId, String mealId, LocalDate date);
+    Optional<Vote> findByStudentIdAndMealIdAndVoteDate(Long studentId, String mealId, LocalDate date);
 
     List<Vote> findByMealIdAndVoteDate(String mealId, LocalDate date);
+
+    List<Vote> findByStudentIdAndVoteDate(Long studentId, LocalDate date);  // ← NEW
 
     long countByMealIdAndVoteDate(String mealId, LocalDate date);
 }

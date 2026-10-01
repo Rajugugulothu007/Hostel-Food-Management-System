@@ -16,6 +16,7 @@ public class StudentMapper {
         d.setPhone(s.getPhone());
         d.setEmail(s.getEmail());
         d.setHostelId(s.getHostelId());
+        d.setType(s.getType());
         d.setActive(s.getActive());
         return d;
     }
@@ -29,6 +30,7 @@ public class StudentMapper {
                 .phone(d.getPhone())
                 .email(d.getEmail())
                 .hostelId(d.getHostelId())
+                .type(d.getType() == null ? "HOSTELLER" : d.getType())
                 .active(d.getActive() == null ? true : d.getActive())
                 .build();
     }

@@ -18,5 +18,6 @@ public class StudentDTO {
     private String phone;
     private String email;
     private Long hostelId;
+    private String type;
     private Boolean active;
 }
