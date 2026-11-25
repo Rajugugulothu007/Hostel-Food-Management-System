@@ -25,8 +25,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(req));
     }
 
-    @GetMapping("/by-username/{username}")
-    public ResponseEntity<StudentDTO> getByUsername(@PathVariable String username) {
-        return ResponseEntity.ok(service.getByUsername(username));
-    }
+//    @GetMapping("/by-username/{username}")
+//    public ResponseEntity<StudentDTO> getByUsername(@PathVariable String username) {
+//        return ResponseEntity.ok(service.getByUsername(username));
+//    }
 }
