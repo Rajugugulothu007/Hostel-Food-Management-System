@@ -33,11 +33,11 @@ class AuthServiceTest {
     private PasswordEncoder passwordEncoder;
     private AuthService authService;
 
-    @BeforeEach
-    void setUp() {
-        passwordEncoder = new BCryptPasswordEncoder();
-        authService = new AuthService(repo, passwordEncoder, jwtUtil);
-    }
+//    @BeforeEach
+//    void setUp() {
+//        passwordEncoder = new BCryptPasswordEncoder();
+//        authService = new AuthService(repo, passwordEncoder, jwtUtil);
+//    }
 
     // ---------- SIGNUP TESTS ----------
 

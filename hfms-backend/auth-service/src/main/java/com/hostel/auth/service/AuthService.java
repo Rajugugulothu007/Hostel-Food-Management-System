@@ -52,10 +52,7 @@ public class AuthService {
             throw new RuntimeException("Invalid credentials");
         }
 
-        // ═══════════════════════════════════════════════════════════
-        // If the user is a student, verify they're still active
-        // in user-service before issuing a token
-        // ═══════════════════════════════════════════════════════════
+        // If the user is a student, verify they're still active in user-service
         if ("STUDENT".equals(user.getRole())) {
             checkStudentActive(user.getUsername());
         }
@@ -72,14 +69,17 @@ public class AuthService {
 
             Map body = res.getBody();
             if (body != null && Boolean.FALSE.equals(body.get("active"))) {
-                throw new RuntimeException(
+                // Our own business exception — must propagate to the user
+                throw new IllegalStateException(
                         "Your account has been deactivated. Please contact hostel admin.");
             }
-        } catch (RuntimeException e) {
-            throw e; // re-throw our own exception
+        } catch (IllegalStateException e) {
+            // Deactivated account — must reach the user, do NOT swallow
+            throw e;
         } catch (Exception e) {
+            // Network error, 4xx/5xx from user-service, timeout, etc.
+            // Fail-open: allow login so a user-service outage doesn't lock everyone out.
             log.warn("Active check failed for {}: {}", username, e.getMessage());
-            // Fail-open: if user-service is down, allow login
         }
     }
 }
